@@ -1,0 +1,52 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+{% block style %}
+    .selected{
+        background-color: #0dcaf0;
+        color: #000;
+    }
+{% endblock %}
+
+{% block body %}
+    <div class="bg-secondary p-2 my-2">Logged in As: {{ request.user.email }}</div>
+
+    <button class="btn btn-outline-info" id="inbox">Inbox</button>
+    <button class="btn btn-outline-info" id="compose">Compose</button>
+    <button class="btn btn-outline-info" id="sent">Sent</button>
+    <button class="btn btn-outline-info" id="archive">Archived</button>
+    <a class="btn btn-outline-info" href="{% url 'logout' %}">Log Out</a>
+    <hr>
+
+    <div id="single-email-view">
+        <div class="container" id="single-email-content">
+
+        </div>
+        <div class="container" id="single-email-back-section">
+
+        </div>
+    </div>
+    <div id="emails-view" class="container">
+    </div>
+
+    <div id="compose-view">
+        <h3>New Email</h3>
+        <form id="compose-form">
+            <div class="form-group mb-3">
+                From: <input disabled class="form-control bg-dark border-info text-white" value="{{ request.user.email }}">
+            </div>
+            <div class="form-group mb-3">
+                To: <span id="to-text-error-message"></span> <input id="compose-recipients" class="form-control  bg-dark border-info text-white">
+            </div>
+            <div class="form-group mb-3">
+                <input class="form-control  bg-dark border-info text-white" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea class="form-control mb-3  bg-dark border-info text-white" id="compose-body" placeholder="Body" rows="10"></textarea>
+            <input type="submit" class="btn btn-info" id="email-submit-button"/>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mail/inbox.js' %}"></script>
+{% endblock %}

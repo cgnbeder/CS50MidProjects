@@ -1,0 +1,49 @@
+{% extends "encyclopedia/layout.html" %}
+{% block title %}
+Delete Entry
+{% endblock title %}
+
+{% block body_content %}
+
+<!-- Modal -->
+<div class="modal fade" id="deletion_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="myInput">Delete Entry</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-secondary"> Are you sure you want to delete </h3>
+        <h2 class="mt-3">{{title|title}}</h2>
+      </div>
+      <div class="modal-footer">
+        {% with title as entry_name  %}
+
+        {% url 'delete_entry' title=entry_name deletion='cancel' as cancel %}
+        <a href="{{cancel}}">
+          <button class="btn btn-secondary font-weight-bold">
+            cancel
+          </button>
+        </a>
+        {% url 'delete_entry' title=entry_name deletion='delete' as delete %}
+        <a href="{{delete}}">
+          <button class="btn btn-danger font-weight-bold">
+            yes, delete it
+          </button>
+          {% endwith %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+window.addEventListener('load', () => {
+  var myModal = new bootstrap.Modal(document.getElementById('deletion_modal'), {})
+  myModal.toggle()
+})
+</script>
+
+
+{% endblock body_content %}
